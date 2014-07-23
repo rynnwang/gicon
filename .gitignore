@@ -1,0 +1,8 @@
+*.obj
+*.pdb
+*.user
+*.vspscc
+*.suo
+[Bb]in/
+[oO]bj/
+*.log
