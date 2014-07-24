@@ -201,17 +201,17 @@ namespace ifunction.GuidIcon
 
             bool[] result = new bool[arraySize];
 
-            var hexLength= (int)     (Math.Log(arraySize)/Math.Log(2));
+            var hexLength = (int)(Math.Log(arraySize) / Math.Log(2));
 
-            var value = (Convert.ToInt64(hexString, 16) & ((long)Math.Pow(2,hexLength)-1)).ToString("X");
+            var value = (Convert.ToInt64(hexString, 16) & ((long)Math.Pow(2, hexLength) - 1)).ToString("X");
 
             //for (int i = 0, j = value.Length - 1; i < result.Length; i = i + 4, j++)
-            
-           
+
+
             //    var tmp = Convert.ToInt16(value[j].ToString(), 16);
             //    result[i] = tmp & 0x1 > 0;
             //    result[i+1] = tmp & 0x1 > 0;
-            }
+
 
             return result;
         }
@@ -223,26 +223,35 @@ namespace ifunction.GuidIcon
         /// <param name="points">The points.</param>
         /// <param name="unitSquareSize">Size of the unit square.</param>
         /// <returns>Bitmap.</returns>
-        private static Bitmap DrawIcon(Color color, bool[,] points, int unitSquareSize = 5)
+        private Bitmap DrawIcon(Color color, bool[,] points, int unitSquareSize = 5)
         {
             if (unitSquareSize < 5)
             {
                 unitSquareSize = 5;
             }
 
-            using (var mem = new MemoryStream())
-            using (var bmp = new Bitmap(unitSquareSize * 5, unitSquareSize * 5))
+            using (var bmp = new Bitmap(unitSquareSize * iconSize, unitSquareSize * iconSize))
             using (var graphicImage = Graphics.FromImage(bmp))
             {
                 graphicImage.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
                 graphicImage.SmoothingMode = SmoothingMode.AntiAlias;
 
-                graphicImage.FillRectangle(Brushes.White, new Rectangle(0, 0, bmp.Width, bmp.Height));
+                var brush = new SolidBrush(color);
 
-                //render as Jpeg
-                bmp.Save(mem, System.Drawing.Imaging.ImageFormat.Jpeg);
-                //      img = File(mem.GetBuffer(), "image/Jpeg");
+                for (var i = 0; i < iconSize; i++)
+                {
+                    for (var j = 0; j < iconSize; j++)
+                    {
+                        if (points[i, j])
+                        {
+                            graphicImage.FillRectangle(brush, new Rectangle(i * unitSquareSize, j * unitSquareSize, unitSquareSize, unitSquareSize));
+                        }
+                    }
+                }
 
+                ////render as Jpeg
+                //bmp.Save(mem, System.Drawing.Imaging.ImageFormat.Jpeg);
+                ////      img = File(mem.GetBuffer(), "image/Jpeg");
                 return bmp;
             }
         }
