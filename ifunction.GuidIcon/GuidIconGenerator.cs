@@ -201,10 +201,16 @@ namespace ifunction.GuidIcon
 
             bool[] result = new bool[arraySize];
 
-            var value = (Convert.ToInt64(hexString, 16) % Math.Pow(2, arraySize)).ToString("x");
+            var hexLength= (int)     (Math.Log(arraySize)/Math.Log(2));
 
-            for (var i = 0; i < result.Length; i++)
-            {
+            var value = (Convert.ToInt64(hexString, 16) & ((long)Math.Pow(2,hexLength)-1)).ToString("X");
+
+            //for (int i = 0, j = value.Length - 1; i < result.Length; i = i + 4, j++)
+            
+           
+            //    var tmp = Convert.ToInt16(value[j].ToString(), 16);
+            //    result[i] = tmp & 0x1 > 0;
+            //    result[i+1] = tmp & 0x1 > 0;
             }
 
             return result;
