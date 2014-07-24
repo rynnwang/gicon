@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.IO;
-using System.Linq;
 using System.Text;
 
 namespace ifunction.GuidIcon
@@ -12,14 +11,28 @@ namespace ifunction.GuidIcon
     public static class GuidIconGenerator
     {
         /// <summary>
+        /// Value indicating the icon would consisted with 8x8 squares.
+        /// </summary>
+        const int iconSize = 8;
+
+        private static Bitmap GenerateIcon(Guid guid, int unitSquareSize = 5)
+        {
+            IconSymmetry symmetry = IconSymmetry.Vertical;
+
+            return GenerateIcon(guid, symmetry, unitSquareSize);
+        }
+
+        /// <summary>
         /// Generates the icon.
         /// </summary>
         /// <param name="guid">The unique identifier.</param>
+        /// <param name="symmetry">The symmetry.</param>
         /// <param name="unitSquareSize">Size of the unit square.</param>
         /// <returns>Bitmap.</returns>
-        public static Bitmap GenerateIcon(Guid guid, int unitSquareSize = 5)
+        private static Bitmap GenerateIcon(Guid guid, IconSymmetry symmetry, int unitSquareSize)
         {
-            bool[,] imagePoints = new bool[8, 4];
+
+            bool[,] imagePoints = GetPoints(guid, symmetry);
             Color color = GetColorByGuid(guid);
 
             return DrawIcon(color, imagePoints, unitSquareSize);
@@ -32,11 +45,75 @@ namespace ifunction.GuidIcon
         /// <returns>Color.</returns>
         private static Color GetColorByGuid(Guid guid)
         {
+            // Sample: {E947B991-8115-43A1-9AE6-85E817D26D8E}
+
             //return ConvertAHSBToColor();
             throw new NotImplementedException();
         }
 
-        private static Bitmap DrawIcon(Color color, bool[,] bits, int unitSquareSize = 5)
+        /// <summary>
+        /// Gets the points.
+        /// </summary>
+        /// <param name="guid">The unique identifier.</param>
+        /// <param name="symmetry">The symmetry.</param>
+        /// <returns>System.Boolean[][].</returns>
+        private static bool[,] GetPoints(Guid guid, IconSymmetry symmetry)
+        {
+            bool[,] result = new bool[iconSize, iconSize];
+
+            var points = GetBasePoints(guid, symmetry);
+
+            switch (symmetry)
+            {
+                case IconSymmetry.Vertical:
+                    break;
+                case IconSymmetry.Horizontal:
+                    break;
+                case IconSymmetry.LeftDiagonal:
+                    break;
+                case IconSymmetry.RightDiagonal:
+                    break;
+                default:
+                    break;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the base points.
+        /// </summary>
+        /// <param name="guid">The unique identifier.</param>
+        /// <param name="symmetry">The symmetry.</param>
+        /// <returns>System.Boolean[][].</returns>
+        private static bool[] GetBasePoints(Guid guid, IconSymmetry symmetry)
+        {
+            int arraySize;
+
+            if (symmetry == IconSymmetry.Horizontal || symmetry == IconSymmetry.Vertical)
+            {
+                arraySize = (((int)(iconSize / 2)) + (iconSize % 2)) * iconSize;
+            }
+            else
+            {
+                arraySize = ((iconSize) * (iconSize - 1) / 2) + iconSize;
+            }
+
+            bool[] result = new bool[arraySize];
+
+            //Todo
+
+            return result;
+        }
+
+        /// <summary>
+        /// Draws the icon.
+        /// </summary>
+        /// <param name="color">The color.</param>
+        /// <param name="points">The points.</param>
+        /// <param name="unitSquareSize">Size of the unit square.</param>
+        /// <returns>Bitmap.</returns>
+        private static Bitmap DrawIcon(Color color, bool[,] points, int unitSquareSize = 5)
         {
             if (unitSquareSize < 5)
             {
@@ -77,7 +154,7 @@ namespace ifunction.GuidIcon
         /// or
         /// brightness;Value must be within a range of 0 - 1.
         /// </exception>
-        public static Color ConvertAHSBToColor(int alpha, float hue, float saturation, float brightness)
+        private static Color ConvertAHSBToColor(int alpha, float hue, float saturation, float brightness)
         {
             if (0 > alpha
                 || 255 < alpha)
@@ -174,6 +251,33 @@ namespace ifunction.GuidIcon
                 default:
                     return Color.FromArgb(alpha, iMax, iMid, iMin);
             }
+        }
+
+        /// <summary>
+        /// Hexadecimals to RGB.
+        /// e.g.: 22FF0033
+        /// </summary>
+        /// <param name="hexString">The hexadecimal string.</param>
+        /// <returns>Color.</returns>
+        private static Color HexToRGB(string hexString)
+        {
+            return HexToRGB(Convert.ToInt64(hexString));
+        }
+
+        /// <summary>
+        /// Hexadecimals to RGB.
+        /// </summary>
+        /// <param name="hex">The hexadecimal.</param>
+        /// <returns>Color.</returns>
+        private static Color HexToRGB(long hex)
+        {
+            int a = (int)((hex & 0xFF000000) >> 48);
+            int r = (int)((hex & 0xFF0000) >> 32);
+            int g = (int)((hex & 0xFF00) >> 16);
+            int b = (int)(hex & 0xFF);
+            Color result = Color.FromArgb(a, r, g, b);
+
+            return result;
         }
     }
 }
