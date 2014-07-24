@@ -13,12 +13,19 @@ namespace ifunction.GuidIcon
     /// </summary>
     public class GuidIconGenerator
     {
+        #region Fields
+
         /// <summary>
         /// Value indicating the icon would consisted with 8x8 squares.
         /// </summary>
         int iconSize;
 
+        /// <summary>
+        /// The unit square size
+        /// </summary>
         int unitSquareSize;
+
+        #endregion
 
         #region Costructor
 
@@ -66,8 +73,10 @@ namespace ifunction.GuidIcon
             {
                 unitSquareSize = this.unitSquareSize;
             }
-
-            IconSymmetry symmetry = IconSymmetry.Vertical;
+            IconSymmetry symmetry;
+            Color color;
+            bool[] points;
+            var iconSize = GetFactor(guid, out color, out symmetry, out points);
 
             return GenerateIcon(guid, symmetry, unitSquareSize);
         }
