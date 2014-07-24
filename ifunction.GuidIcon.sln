@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ifunction.GuidIcon", "ifunction.GuidIcon.csproj", "{71A0788C-2C85-4543-BD1A-E71519CD0689}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ifunction.GuidIcon", "ifunction.GuidIcon\ifunction.GuidIcon.csproj", "{71A0788C-2C85-4543-BD1A-E71519CD0689}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ifunction.GuidIcon.Demo", "..\ifunction.GuidIcon.Demo\ifunction.GuidIcon.Demo.csproj", "{04BF15F5-8F7F-4FE7-B039-4B4CA15906E8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ifunction.GuidIcon.Demo", "ifunction.GuidIcon.Demo\ifunction.GuidIcon.Demo.csproj", "{04BF15F5-8F7F-4FE7-B039-4B4CA15906E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ifunction.GuidIcon.Web", "..\ifunction.GuidIcon.Web\ifunction.GuidIcon.Web.csproj", "{1A10A684-82CA-4B25-9C9F-CDF1A9FBCBB6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ifunction.GuidIcon.Web", "ifunction.GuidIcon.Web\ifunction.GuidIcon.Web.csproj", "{1A10A684-82CA-4B25-9C9F-CDF1A9FBCBB6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
