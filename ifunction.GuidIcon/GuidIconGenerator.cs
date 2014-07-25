@@ -135,9 +135,9 @@ namespace ifunction.GuidIcon
                 case IconSymmetry.RightDiagonal:
                     for (int i = 0; i < iconSize; i++)
                     {
-                        for (int j = 0; j < i; j++)
+                        for (int j = iconSize - i - 1; j > 0; j--)
                         {
-                            result[j, i] = result[i, j] = basePoints[sum];
+                            result[i, j] = result[iconSize - j - 1, iconSize - i - 1] = basePoints[sum];
                             sum++;
                         }
                     }
