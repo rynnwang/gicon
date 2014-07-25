@@ -62,7 +62,7 @@ namespace ifunction.GuidIcon
 
         #endregion
 
-        #region Guid to factor
+        #region Generation logics
 
         /// <summary>
         /// Gets the factor.
@@ -70,8 +70,8 @@ namespace ifunction.GuidIcon
         /// <param name="guid">The unique identifier.</param>
         /// <param name="color">The color.</param>
         /// <param name="symmetry">The symmetry.</param>
-        /// <param name="pointNumber">The point number.</param>
-        /// <returns>System.Int32 for icon size (5- 8).</returns>
+        /// <param name="points">The points.</param>
+        /// <returns>System.Int32 for icon size (7- 11).</returns>
         private int GetFactor(Guid guid, out Color color, out IconSymmetry symmetry, out bool[] points)
         {
             var segments = guid.ToString().Split('-');
@@ -91,13 +91,14 @@ namespace ifunction.GuidIcon
         /// <summary>
         /// Gets the points.
         /// </summary>
-        /// <param name="guid">The unique identifier.</param>
+        /// <param name="basePoints">The base points.</param>
+        /// <param name="iconSize">Size of the icon.</param>
         /// <param name="symmetry">The symmetry.</param>
         /// <returns>System.Boolean[][].</returns>
         private bool[,] GetPoints(bool[] basePoints, int iconSize, IconSymmetry symmetry)
         {
             bool[,] result = new bool[iconSize, iconSize];
-            bool isEven = iconSize % 2 == 0;
+
             int halfLength = ((int)(iconSize / 2)) + (iconSize % 2);
             int sum = 0;
 
@@ -146,23 +147,6 @@ namespace ifunction.GuidIcon
             }
 
             return result;
-        }
-
-        #endregion
-
-        /// <summary>
-        /// Initializes the specified _icon size.
-        /// </summary>
-        /// <param name="_iconSize">Size of the _icon.</param>
-        /// <param name="_unitSquareSize">Size of the _unit square.</param>
-        private void Initialize(int _iconSize, int _unitSquareSize)
-        {
-            this.unitSquareSize = _unitSquareSize;
-
-            if (this.unitSquareSize < 5)
-            {
-                this.unitSquareSize = 5;
-            }
         }
 
         /// <summary>
@@ -381,6 +365,24 @@ namespace ifunction.GuidIcon
             Color result = Color.FromArgb(a, r, g, b);
 
             return result;
+        }
+
+        #endregion
+
+        /// <summary>
+        /// The generator
+        /// </summary>
+        static GuidIconGenerator generator = new GuidIconGenerator();
+
+        /// <summary>
+        /// Generates the bitmap.
+        /// </summary>
+        /// <param name="guid">The unique identifier.</param>
+        /// <param name="imageWidth">Width of the image.</param>
+        /// <returns>Bitmap.</returns>
+        public static Bitmap GenerateBitmap(Guid guid, int imageWidth = 256)
+        {
+            return generator.GenerateIcon(guid, imageWidth);
         }
     }
 }
