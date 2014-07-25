@@ -208,9 +208,6 @@ namespace ifunction.GuidIcon
 
             using (var graphicImage = Graphics.FromImage(bmp))
             {
-                graphicImage.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
-                graphicImage.SmoothingMode = SmoothingMode.AntiAlias;
-
                 var brush = new SolidBrush(color);
                 var white = new SolidBrush(Color.White);
 
