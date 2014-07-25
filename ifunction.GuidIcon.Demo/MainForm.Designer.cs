@@ -50,7 +50,6 @@
             this.text_Guid.Name = "text_Guid";
             this.text_Guid.Size = new System.Drawing.Size(295, 25);
             this.text_Guid.TabIndex = 1;
-            this.text_Guid.Text = "16EF7B9F-F797-4AC3-9D52-3C0E353C1924";
             this.text_Guid.TextChanged += new System.EventHandler(this.text_Guid_TextChanged);
             // 
             // btn_RandomGuid
@@ -87,6 +86,7 @@
             this.Name = "MainForm";
             this.ShowIcon = false;
             this.Text = "Guid Icon Generator";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.iconImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

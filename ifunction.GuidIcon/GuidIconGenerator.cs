@@ -302,15 +302,13 @@ namespace ifunction.GuidIcon
                 graphicImage.SmoothingMode = SmoothingMode.AntiAlias;
 
                 var brush = new SolidBrush(color);
+                var white = new SolidBrush(Color.White);
 
                 for (var i = 0; i < IconSize; i++)
                 {
                     for (var j = 0; j < IconSize; j++)
                     {
-                        if (points[i, j])
-                        {
-                            graphicImage.FillRectangle(brush, new Rectangle(i * unitSquareSize, j * unitSquareSize, unitSquareSize, unitSquareSize));
-                        }
+                        graphicImage.FillRectangle(points[i, j] ? brush : white, new Rectangle(i * unitSquareSize, j * unitSquareSize, unitSquareSize, unitSquareSize));
                     }
                 }
 
@@ -453,9 +451,9 @@ namespace ifunction.GuidIcon
         /// <returns>Color.</returns>
         private static Color HexToRGB(long hex)
         {
-            int a = (int)((hex & 0xFF000000) >> 48);
-            int r = (int)((hex & 0xFF0000) >> 32);
-            int g = (int)((hex & 0xFF00) >> 16);
+            int a = (int)((hex & 0xFF000000) >> 24);
+            int r = (int)((hex & 0xFF0000) >> 16);
+            int g = (int)((hex & 0xFF00) >> 8);
             int b = (int)(hex & 0xFF);
             Color result = Color.FromArgb(a, r, g, b);
 
