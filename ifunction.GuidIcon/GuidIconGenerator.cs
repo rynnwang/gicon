@@ -16,16 +16,6 @@ namespace ifunction.GuidIcon
         #region Fields
 
         /// <summary>
-        /// Gets or sets the size of the icon.
-        /// </summary>
-        /// <value>The size of the icon.</value>
-        public int IconSize
-        {
-            get;
-            protected set;
-        }
-
-        /// <summary>
         /// The unit square size
         /// </summary>
         int unitSquareSize;
@@ -37,29 +27,8 @@ namespace ifunction.GuidIcon
         /// <summary>
         /// Initializes a new instance of the <see cref="GuidIconGenerator" /> class.
         /// </summary>
-        /// <param name="iconSize">Size of the icon.</param>
-        /// <param name="unitSquareSize">Size of the unit square.</param>
-        public GuidIconGenerator(int iconSize, int unitSquareSize = 5)
+        public GuidIconGenerator()
         {
-            Initialize(iconSize, unitSquareSize);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GuidIconGenerator" /> class.
-        /// It would use guid to hash a size. (Size range: 5 - 8)
-        /// <example>
-        /// GUID: {E947B991-8115-43A1-9AE6-85E817D26D8E}
-        /// Segment = 8115
-        /// Icon size would be: ((0x81 ^ 0x15) % 4) + 3 = 5
-        /// </example>
-        /// </summary>
-        /// <param name="guid">The unique identifier.</param>
-        public GuidIconGenerator(Guid guid, int unitSquareSize = 5)
-        {
-            string segment2 = guid.ToString().Split('-')[1];
-            var _iconSize = 3 + ((Convert.ToInt32(segment2.Substring(0, 2), 16) ^ Convert.ToInt32(segment2.Substring(2, 2), 16)) % 4);
-
-            Initialize(_iconSize, unitSquareSize);
         }
 
         #endregion
@@ -70,13 +39,13 @@ namespace ifunction.GuidIcon
         /// Generates the icon.
         /// </summary>
         /// <param name="guid">The unique identifier.</param>
-        /// <param name="unitSquareSize">Size of the unit square.</param>
+        /// <param name="imageWidth">Width of the image.</param>
         /// <returns>Bitmap.</returns>
-        public Bitmap GenerateIcon(Guid guid, int unitSquareSize)
+        public Bitmap GenerateIcon(Guid guid, int imageWidth)
         {
-            if (unitSquareSize < 5)
+            if (imageWidth < 400)
             {
-                unitSquareSize = this.unitSquareSize;
+                imageWidth = 400;
             }
 
             IconSymmetry symmetry;
@@ -84,9 +53,11 @@ namespace ifunction.GuidIcon
             bool[] points;
             var iconSize = GetFactor(guid, out color, out symmetry, out points);
 
-            bool[,] imagePoints = GetPoints(points, symmetry);
+            var unitSquareSize = (int)(imageWidth / iconSize);
 
-            return DrawIcon(color, imagePoints, unitSquareSize);
+            bool[,] imagePoints = GetPoints(points, iconSize, symmetry);
+
+            return DrawIcon(color, imagePoints, iconSize, unitSquareSize);
         }
 
         #endregion
@@ -110,9 +81,9 @@ namespace ifunction.GuidIcon
             string segment3 = segments[2];
 
             color = HexToRGB(segment1);
-            var _iconSize = 3 + ((Convert.ToInt32(segment2.Substring(0, 2), 16) ^ Convert.ToInt32(segment2.Substring(2, 2), 16)) % 4);
+            var _iconSize = 7 + ((Convert.ToInt32(segment2.Substring(0, 2), 16) ^ Convert.ToInt32(segment2.Substring(2, 2), 16)) % 4);
             symmetry = (IconSymmetry)((Convert.ToInt32(segment3.Substring(0, 2), 16) ^ Convert.ToInt32(segment3.Substring(2, 2), 16)) % 4);
-            points = GetBasePoints(segments[3] + segments[4], symmetry);
+            points = GetBasePoints(segments[3] + segments[4], _iconSize, symmetry);
 
             return _iconSize;
         }
@@ -123,37 +94,37 @@ namespace ifunction.GuidIcon
         /// <param name="guid">The unique identifier.</param>
         /// <param name="symmetry">The symmetry.</param>
         /// <returns>System.Boolean[][].</returns>
-        private bool[,] GetPoints(bool[] basePoints, IconSymmetry symmetry)
+        private bool[,] GetPoints(bool[] basePoints, int iconSize, IconSymmetry symmetry)
         {
-            bool[,] result = new bool[IconSize, IconSize];
-            bool isEven = IconSize % 2 == 0;
-            int halfLength = ((int)(IconSize / 2)) + (IconSize % 2);
+            bool[,] result = new bool[iconSize, iconSize];
+            bool isEven = iconSize % 2 == 0;
+            int halfLength = ((int)(iconSize / 2)) + (iconSize % 2);
             int sum = 0;
 
             switch (symmetry)
             {
                 case IconSymmetry.Vertical:
-                    for (int i = 0; i < IconSize; i++)
+                    for (int i = 0; i < iconSize; i++)
                     {
                         for (int j = 0; j < halfLength; j++)
                         {
-                            result[i, IconSize - 1 - j] = result[i, j] = basePoints[i * halfLength + j];
+                            result[i, iconSize - 1 - j] = result[i, j] = basePoints[i * halfLength + j];
                         }
                     }
                     break;
                 case IconSymmetry.Horizontal:
                     for (int j = 0; j < halfLength; j++)
                     {
-                        for (int i = 0; i < IconSize; i++)
+                        for (int i = 0; i < iconSize; i++)
                         {
-                            result[IconSize - 1 - j, i] = result[j, i] = basePoints[i * halfLength + j];
+                            result[iconSize - 1 - j, i] = result[j, i] = basePoints[i * halfLength + j];
                         }
                     }
                     break;
                 case IconSymmetry.LeftDiagonal:
-                    for (int i = 0; i < IconSize; i++)
+                    for (int i = 0; i < iconSize; i++)
                     {
-                        for (int j = i; j < IconSize; j++)
+                        for (int j = i; j < iconSize; j++)
                         {
                             result[j, i] = result[i, j] = basePoints[sum];
                             sum++;
@@ -161,7 +132,7 @@ namespace ifunction.GuidIcon
                     }
                     break;
                 case IconSymmetry.RightDiagonal:
-                    for (int i = 0; i < IconSize; i++)
+                    for (int i = 0; i < iconSize; i++)
                     {
                         for (int j = 0; j < i; j++)
                         {
@@ -186,24 +157,12 @@ namespace ifunction.GuidIcon
         /// <param name="_unitSquareSize">Size of the _unit square.</param>
         private void Initialize(int _iconSize, int _unitSquareSize)
         {
-            this.IconSize = _iconSize;
             this.unitSquareSize = _unitSquareSize;
 
             if (this.unitSquareSize < 5)
             {
                 this.unitSquareSize = 5;
             }
-        }
-
-        /// <summary>
-        /// Gets the color by unique identifier.
-        /// </summary>
-        /// <param name="guid">The unique identifier.</param>
-        /// <returns>Color.</returns>
-        private Color GetColorByGuid(Guid guid)
-        {
-            //return ConvertAHSBToColor();
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -217,19 +176,20 @@ namespace ifunction.GuidIcon
         /// </example>
         /// </summary>
         /// <param name="hexString">The hexadecimal string.</param>
+        /// <param name="iconSize">Size of the icon.</param>
         /// <param name="symmetry">The symmetry.</param>
         /// <returns>System.Boolean[].</returns>
-        private bool[] GetBasePoints(string hexString, IconSymmetry symmetry)
+        private bool[] GetBasePoints(string hexString, int iconSize, IconSymmetry symmetry)
         {
             int arraySize;
 
             if (symmetry == IconSymmetry.Horizontal || symmetry == IconSymmetry.Vertical)
             {
-                arraySize = (((int)(IconSize / 2)) + (IconSize % 2)) * IconSize;
+                arraySize = (((int)(iconSize / 2)) + (iconSize % 2)) * iconSize;
             }
             else
             {
-                arraySize = ((IconSize) * (IconSize - 1) / 2) + IconSize;
+                arraySize = ((iconSize) * (iconSize - 1) / 2) + iconSize;
             }
 
             bool[] result = new bool[arraySize];
@@ -251,50 +211,16 @@ namespace ifunction.GuidIcon
         }
 
         /// <summary>
-        /// Gets the points.
-        /// </summary>
-        /// <param name="guid">The unique identifier.</param>
-        /// <param name="symmetry">The symmetry.</param>
-        /// <returns>System.Boolean[][].</returns>
-        private bool[,] ConvertBasePointsToBmpPoints(IconSymmetry symmetry, bool[] basePoints)
-        {
-            bool[,] result = new bool[IconSize, IconSize];
-
-            //var points = GetBasePoints(guid, symmetry);
-
-            switch (symmetry)
-            {
-                case IconSymmetry.Vertical:
-                    break;
-                case IconSymmetry.Horizontal:
-                    break;
-                case IconSymmetry.LeftDiagonal:
-                    break;
-                case IconSymmetry.RightDiagonal:
-                    break;
-                default:
-                    break;
-            }
-
-            return result;
-        }
-
-
-        /// <summary>
         /// Draws the icon.
         /// </summary>
         /// <param name="color">The color.</param>
         /// <param name="points">The points.</param>
+        /// <param name="iconSize">Size of the icon.</param>
         /// <param name="unitSquareSize">Size of the unit square.</param>
         /// <returns>Bitmap.</returns>
-        private Bitmap DrawIcon(Color color, bool[,] points, int unitSquareSize = 5)
+        private Bitmap DrawIcon(Color color, bool[,] points, int iconSize, int unitSquareSize)
         {
-            if (unitSquareSize < 5)
-            {
-                unitSquareSize = 5;
-            }
-
-            var bmp = new Bitmap(unitSquareSize * IconSize, unitSquareSize * IconSize);
+            var bmp = new Bitmap(unitSquareSize * iconSize, unitSquareSize * iconSize);
 
             using (var graphicImage = Graphics.FromImage(bmp))
             {
@@ -304,17 +230,14 @@ namespace ifunction.GuidIcon
                 var brush = new SolidBrush(color);
                 var white = new SolidBrush(Color.White);
 
-                for (var i = 0; i < IconSize; i++)
+                for (var i = 0; i < iconSize; i++)
                 {
-                    for (var j = 0; j < IconSize; j++)
+                    for (var j = 0; j < iconSize; j++)
                     {
                         graphicImage.FillRectangle(points[i, j] ? brush : white, new Rectangle(i * unitSquareSize, j * unitSquareSize, unitSquareSize, unitSquareSize));
                     }
                 }
 
-                ////render as Jpeg
-                //bmp.Save(mem, System.Drawing.Imaging.ImageFormat.Jpeg);
-                ////      img = File(mem.GetBuffer(), "image/Jpeg");
                 return bmp;
             }
         }

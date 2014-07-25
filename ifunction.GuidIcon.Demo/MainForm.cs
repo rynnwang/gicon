@@ -42,8 +42,8 @@ namespace ifunction.GuidIcon.Demo
 
             if (guid != null)
             {
-                GuidIconGenerator generator = new GuidIconGenerator(guid.Value);
-                var bitmap = generator.GenerateIcon(guid.Value, (int)(400 / generator.IconSize));
+                GuidIconGenerator generator = new GuidIconGenerator();
+                var bitmap = generator.GenerateIcon(guid.Value, 400);
 
                 this.iconImage.Image = bitmap;
             }
