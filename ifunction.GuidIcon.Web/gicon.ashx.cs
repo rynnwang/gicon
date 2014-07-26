@@ -14,15 +14,15 @@ namespace ifunction.GuidIcon.Web
         public void ProcessRequest(HttpContext context)
         {
             Guid? guid = null;
-            int width;
+            int size;
             context.Response.ContentType = "image/png";
 
-            var input = context.Request.QueryString.Get("guid");
-            int.TryParse(context.Request.QueryString.Get("width"), out width);
+            var hash = context.Request.QueryString.Get("hash");
+            int.TryParse(context.Request.QueryString.Get("size"), out size);
 
             try
             {
-                guid = new Guid(input);
+                guid = new Guid(hash);
             }
             catch { }
 
@@ -31,12 +31,12 @@ namespace ifunction.GuidIcon.Web
                 guid = Guid.NewGuid();
             }
 
-            if (width < 64)
+            if (size < 64)
             {
-                width = 64;
+                size = 64;
             }
 
-            using (var bmp = GuidIconGenerator.GenerateBitmap(guid.Value, width))
+            using (var bmp = GuidIconGenerator.GenerateBitmap(guid.Value, size))
             {
                 bmp.Save(context.Response.OutputStream, System.Drawing.Imaging.ImageFormat.Png);
             }

@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="gicon.ashx" />
+    <None Include="Properties\PublishProfiles\File.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

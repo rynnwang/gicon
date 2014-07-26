@@ -5,13 +5,13 @@
 <html>
 <head>
   <title>GICON Demo Web</title>
-  <script type="text/javascript" src="Scripts/jquery-1.11.1.min.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
   <script type="text/javascript">
 
     function newIcon(instance, guid, width, t) {
       instance = $(instance);
       var src = instance.attr("src");
-      instance.attr("src", "gicon.ashx?guid=" + (guid || "") + "&width=" + (width || 0) + "&t=" + (t || ""));
+      instance.attr("src", "gicon.ashx?hash=" + (guid || "") + "&size=" + (width || 0) + "&t=" + (t || ""));
       instance.attr("width", width).attr("height", width);
     }
 
@@ -22,7 +22,7 @@
       });
 
       $("#random").click(function () {
-        newIcon($("#image"), "", $("#width").val(),(new Date()).getTime());
+        newIcon($("#image"), "", $("#width").val(), (new Date()).getTime());
       });
     });
   </script>
@@ -48,6 +48,14 @@
     #description {
       font-weight: normal;
       font-size: 12px;
+    }
+
+    #allright {
+      position: absolute;
+      height: 40px;
+      left: 0;
+      right: 0;
+      bottom: 0;
     }
   </style>
 </head>
@@ -77,6 +85,10 @@
   <div>
     <image id="image" />
 
+    <div id="allright">
+      <div>Open Source Project: gicon</div>
+      <div>Source Code: <a href="http://gicon.codeplex.com/" target="_blank">Codeplex</a> or <a href="http://github.com/rynnwang/gicon/" target="_blank">Github</a></div>
+  </div>
   </div>
 </body>
 </html>

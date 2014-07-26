@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Index" xml:space="preserve">
+    <value>&lt;!DOCTYPE&gt;
+
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;GICON Demo Web&lt;/title&gt;
+  &lt;script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"&gt;&lt;/script&gt;
+  &lt;script type="text/javascript"&gt;
+
+    function newIcon(instance, guid, width, t) {
+      instance = $(instance);
+      var src = instance.attr("src");
+      instance.attr("src", "?hash=" + (guid || "") + "&amp;size=" + (width || 0) + "&amp;t=" + (t || ""));
+      instance.attr("width", width).attr("height", width);
+    }
+
+    $(document).ready(function () {
+
+      $("#generate").click(function () {
+        newIcon($("#image"), $("#hash").val(), $("#width").val());
+      });
+
+      $("#random").click(function () {
+        newIcon($("#image"), "", $("#width").val(), (new Date()).getTime());
+      });
+    });
+  &lt;/script&gt;
+
+  &lt;style&gt;
+    body {
+      font-family: arial;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    label {
+      width: 50px;
+    }
+
+    #hash {
+      font-family: arial;
+      font-size: 14px;
+      font-weight: bold;
+      width: 300px;
+    }
+
+    #description {
+      font-weight: normal;
+      font-size: 12px;
+    }
+
+    #allright {
+      position: absolute;
+      height: 40px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;label&gt;Hash:&lt;/label&gt;&lt;input type="text" id="hash" placeholder="&lt; Hash &gt; ..." /&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;label&gt;Width:&lt;/label&gt;&lt;select id="width"&gt;
+      &lt;option value="256"&gt;256 x 256&lt;/option&gt;
+      &lt;option value="400"&gt;400 x 400&lt;/option&gt;
+      &lt;option value="512"&gt;512 x 512&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;input type="button" id="generate" value="Generate" /&gt;
+    &lt;input type="button" id="random" value="Random" /&gt;
+  &lt;/div&gt;
+  &lt;div id="description"&gt;
+    Hash here could be GUID, SHA1, MD5 or any other hex string consisted by 32 hex charset.
+    Sample:
+    &lt;ul&gt;
+      &lt;li&gt;03348541-a4b1-4a42-9cf1-90c538b01ecd&lt;/li&gt;
+      &lt;li&gt;03348541-A4B1-4A42-9CF1-90C538B01ECD&lt;/li&gt;
+      &lt;li&gt;03348541a4b14a429cf190c538b01ecd&lt;/li&gt;
+      &lt;li&gt;03348541A4B14A429CF190C538B01ECD&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;image id="image" /&gt;
+
+    &lt;div id="allright"&gt;
+      &lt;div&gt;Open Source Project: gicon&lt;/div&gt;
+      &lt;div&gt;Source Code: &lt;a href="http://gicon.codeplex.com/" target="_blank"&gt;Codeplex&lt;/a&gt; or &lt;a href="http://github.com/rynnwang/gicon/" target="_blank"&gt;Github&lt;/a&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</value>
+  </data>
+</root>
