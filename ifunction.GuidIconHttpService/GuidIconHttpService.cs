@@ -210,6 +210,10 @@ namespace ifunction.GuidIcon
                 {
                     this.ProcessException(httpContext, responseCode, errorMessage);
                 }
+                finally
+                {
+                    httpContext.Response.Close();
+                }
             }
         }
 
