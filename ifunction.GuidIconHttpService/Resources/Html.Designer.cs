@@ -65,18 +65,15 @@ namespace ifunction.GuidIconHttpService.Resources {
         ///
         ///&lt;html&gt;
         ///&lt;head&gt;
-        ///  &lt;title&gt;GICON Demo Web&lt;/title&gt;
-        ///  &lt;script type=&quot;text/javascript&quot; src=&quot;http://code.jquery.com/jquery-1.11.1.min.js&quot;&gt;&lt;/script&gt;
-        ///  &lt;script type=&quot;text/javascript&quot;&gt;
+        ///    &lt;title&gt;GICON Demo Web&lt;/title&gt;
+        ///    &lt;script type=&quot;text/javascript&quot; src=&quot;http://code.jquery.com/jquery-1.11.1.min.js&quot;&gt;&lt;/script&gt;
+        ///    &lt;script type=&quot;text/javascript&quot;&gt;
         ///
-        ///    function newIcon(instance, guid, width, t) {
-        ///      instance = $(instance);
-        ///      var src = instance.attr(&quot;src&quot;);
-        ///      instance.attr(&quot;src&quot;, &quot;?hash=&quot; + (guid || &quot;&quot;) + &quot;&amp;size=&quot; + (width || 0) + &quot;&amp;t=&quot; + (t || &quot;&quot;));
-        ///      instance.attr(&quot;width&quot;, width).attr(&quot;height&quot;, width);
-        ///    }
-        ///
-        ///    $(document).ready(functio [rest of string was truncated]&quot;;.
+        ///        function newIcon(instance, guid, width, t) {
+        ///            instance = $(instance);
+        ///            var src = instance.attr(&quot;src&quot;);
+        ///            instance.attr(&quot;src&quot;, &quot;gicon.ashx?hash=&quot; + (guid || &quot;&quot;) + &quot;&amp;size=&quot; + (width || 0) + &quot;&amp;t=&quot; + (t || &quot;&quot;));
+        ///            instance.attr(&quot;width&quot;, width).attr(&quot;height&quot;, wid [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Index {
             get {

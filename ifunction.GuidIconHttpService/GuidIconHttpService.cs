@@ -108,34 +108,29 @@ namespace ifunction.GuidIcon
         /// <param name="httpContext">The HTTP context.</param>
         public void ProcessHttpRequest(HttpListenerContext httpContext)
         {
-            Guid? guid = null;
             int size;
+            string input = null;
 
             try
             {
-                guid = new Guid(httpContext.Request.QueryString.Get("hash"));
+                input = httpContext.Request.QueryString.Get("hash");
             }
             catch { }
 
             int.TryParse(httpContext.Request.QueryString.Get("size"), out size);
 
-            if (guid == null && size < 1)
+            if (string.IsNullOrWhiteSpace(input) && size < 1)
             {
                 ResponsePage(httpContext.Response);
             }
             else
             {
-                if (guid == null)
-                {
-                    guid = Guid.NewGuid();
-                }
-
                 if (size < 32)
                 {
                     size = 256;
                 }
 
-                ResponseImage(httpContext.Response, guid.Value, size);
+                ResponseImage(httpContext.Response, input, size);
             }
         }
 
@@ -154,13 +149,13 @@ namespace ifunction.GuidIcon
         /// Responses the image.
         /// </summary>
         /// <param name="httpResponse">The HTTP response.</param>
-        /// <param name="guid">The unique identifier.</param>
+        /// <param name="input">The input.</param>
         /// <param name="size">The size.</param>
-        protected void ResponseImage(HttpListenerResponse httpResponse, Guid guid, int size)
+        protected void ResponseImage(HttpListenerResponse httpResponse, string input, int size)
         {
             httpResponse.ContentType = "image/png";
 
-            using (var bmp = GuidIconGenerator.GenerateBitmap(guid, size))
+            using (var bmp = GuidIconGenerator.GenerateBitmap(input, size))
             {
                 bmp.Save(httpResponse.OutputStream, System.Drawing.Imaging.ImageFormat.Png);
                 httpResponse.OutputStream.Flush();
