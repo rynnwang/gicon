@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.IO;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace ifunction.GuidIcon
@@ -380,6 +381,42 @@ namespace ifunction.GuidIcon
         public static Bitmap GenerateBitmap(Guid guid, int imageWidth = 256)
         {
             return generator.GenerateIcon(guid, imageWidth);
+        }
+
+        /// <summary>
+        /// Generates the bitmap.
+        /// If <c>hashKey</c> is hash based (128 bit hex string) or guid, convert it.
+        /// Otherwise using MD5 to hash it and convert it.
+        /// </summary>
+        /// <param name="hashKey">The hash key.</param>
+        /// <param name="imageWidth">Width of the image.</param>
+        /// <returns>Bitmap.</returns>
+        public static Bitmap GenerateBitmap(string hashKey, int imageWidth = 256)
+        {
+            Guid? guid = null;
+
+            try
+            {
+                guid = new Guid(hashKey);
+            }
+            catch { }
+
+            if (guid == null)
+            {
+                guid = new Guid(ToMD5(hashKey));
+            }
+
+            return generator.GenerateIcon(guid.Value, imageWidth);
+        }
+
+        public static string ToMD5(string input)
+        {
+            byte[] data = Encoding.UTF8.GetBytes(input ?? "");
+
+            MD5CryptoServiceProvider md5Provider = new MD5CryptoServiceProvider();
+            byte[] hash_byte = md5Provider.ComputeHash(data);
+            string result = System.BitConverter.ToString(hash_byte);
+            return result.Replace("-", "");
         }
     }
 }

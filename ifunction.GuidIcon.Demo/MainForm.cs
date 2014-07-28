@@ -32,21 +32,8 @@ namespace ifunction.GuidIcon.Demo
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void text_Guid_TextChanged(object sender, EventArgs e)
         {
-            Guid? guid = null;
-
-            try
-            {
-                guid = new Guid(((TextBox)sender).Text);
-            }
-            catch { }
-
-            if (guid != null)
-            {
-                GuidIconGenerator generator = new GuidIconGenerator();
-                var bitmap = generator.GenerateIcon(guid.Value, 400);
-
-                this.iconImage.Image = bitmap;
-            }
+            var bitmap = GuidIconGenerator.GenerateBitmap(((TextBox)sender).Text, 400);
+            this.iconImage.Image = bitmap;
         }
 
         /// <summary>
